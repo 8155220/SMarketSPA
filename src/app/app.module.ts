@@ -12,6 +12,7 @@ import { ProductTypeComponent } from './components/product-type/product-type.com
 
 import {ReactiveFormsModule} from '@angular/forms';
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { CreateProductComponent } from './components/product/create-product/crea
     HttpClientModule,
     APP_ROUTING,
     ReactiveFormsModule,
+    NgbModule
   ],
   providers: [SMarketService],
   bootstrap: [AppComponent]

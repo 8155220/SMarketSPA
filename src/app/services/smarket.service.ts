@@ -89,4 +89,6 @@ export class SMarketService {
     let deleteUrl: string = `${this.url}ProductTypes/${id}`;
     return this.http.delete(deleteUrl).subscribe(res => console.log(res));
   }
+
+  
 }

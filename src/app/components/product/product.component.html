@@ -1,5 +1,6 @@
 <div class='container'>
-    <button type="button" class="btn btn-primary btn-lg">Add Product</button>
+    <!-- <button type="button" class="btn btn-primary btn-lg">Add Product</button> -->
+    <a class="btn btn-primary btn-lg" routerLink="/products/create">Add Product</a>
     <div class="card-columns">
         <div class="card animated fadeIn fast" *ngFor="let product of products; let i=index">
             <img class="card-img-top " [src]="product.image | noimage" [alt]="product.name">

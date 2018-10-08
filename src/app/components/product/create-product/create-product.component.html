@@ -1,3 +1,123 @@
-<p>
-  create-product works!
-</p>
+<!-- <h1 class="animated fadeIn">{{heroe.nombre | uppercase }}<small> ({{heroe.aparicion | date:'y'}})</small></h1>
+<hr> -->
+
+<div class="container">
+    <div class="row">
+        <div class="card col" style="width: 18rem;">
+            <img class="card-img-top" [src]="url1" onError="this.src='assets/img/noimage.png'">
+            <div class="card-footer">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Select</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="addFile1($event)">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card col" style="width: 18rem;">
+            <img class="card-img-top" [src]="url2" onError="this.src='assets/img/noimage.png'">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Select</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile02" (change)="addFile2($event)">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card col" style="width: 18rem;">
+            <img class="card-img-top" [src]="url3" onError="this.src='assets/img/noimage.png'">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Select</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile03" (change)="addFile3($event)">
+                        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card col" style="width: 18rem;">
+            <img class="card-img-top" [src]="url4" onError="this.src='assets/img/noimage.png'">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Select</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile04" (change)="addFile4($event)">
+                        <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <form [formGroup]="myForm" (ngSubmit)="onSave()">
+
+            value:{{myForm.value | json}}
+            <hr>
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" id="Name" formControlName="name" placeholder="Write a name">
+                <!-- <small id="emailHelp" class="form-text text-muted">E.g.:  kg,gr,ml,lt</small> -->
+            </div>
+            <div class="form-group">
+                <label for="Name">Provider Name</label>
+                <input type="text" class="form-control" id="Name" formControlName="provider" placeholder="Write a provider name">
+                <!-- <small id="emailHelp" class="form-text text-muted">E.g.:  kg,gr,ml,lt</small> -->
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" formControlName="description" placeholder="Write a Description">
+                <!-- <small id="emailHelp" class="form-text text-muted">E.g.:  Kilogramo</small> -->
+            </div>
+            <div class="form-group">
+                <label for="buyPrice">Buy Price</label>
+                <input type="number" class="form-control" id="buyPrice" formControlName="description" placeholder="Type a Buy Price">
+            </div>
+            <div class="form-group">
+                <label for="buyPrice">Sell Price</label>
+                <input type="number" class="form-control" id="buyPrice" formControlName="description" placeholder="Type a Sell Price">
+            </div>
+
+            <div class="form-group">
+                <label for="dob-input">Expiration Date</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="yyyy-mm-dd" name="dob" formControlName="expirationDate" ngbDatepicker #dob="ngbDatepicker">
+                    <button class="input-group-addon" (click)="dob.toggle()" type="button">
+                        <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                      </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dob-input">Product Type</label>
+                <select class="custom-select" formControlName="productTypeId">
+                            <option [value]="productType.productTypeId"  *ngFor="let productType of productTypes; let i=index" >{{productType.name +" "+productType.description}}</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <label for="dob-input">Unit Type</label>
+                <select class="custom-select" formControlName="unitTypeId">
+                            <option [value]="unitType.unitTypeId"  *ngFor="let unitType of unitTypes; let i=index" >{{unitType.symbol +" "+unitType.description}}</option>
+                 </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
+</div>

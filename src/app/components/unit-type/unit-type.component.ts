@@ -2,7 +2,6 @@ import { UnitType } from "./../../models/unit-type";
 import { SMarketService } from "./../../services/smarket.service";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { SMarketService } from "../../services/smarket.service";
 @Component({
   selector: "app-unit-type",
   templateUrl: "./unit-type.component.html",
