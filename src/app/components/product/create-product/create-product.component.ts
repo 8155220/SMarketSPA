@@ -130,26 +130,7 @@ export class CreateProductComponent implements OnInit {
 
   onSave() {
     
-    /*const filePath = `productImages/+${new Date().getTime()}_${
-      this.myForm.get("name").value
-    }`;
-    const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, this.path1);
-    this.uploadPercent = task.percentageChanges();
-    // get notified when the download URL is available
-    task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL().subscribe(url => {
-            console.log(url);
-          });
-        })
-      )
-      .subscribe();*/
-
-    //this.downloadURL.subscribe(s => console.log(s));
-
+   
     let expirationDate = this.myForm.get('expirationDate').value;
     expirationDate = expirationDate.year+"-"+expirationDate.month+"-"+expirationDate.day;
     this.myForm.get('expirationDate').setValue(expirationDate);
@@ -157,33 +138,9 @@ export class CreateProductComponent implements OnInit {
     let producto = this.myForm.value as Product;
     
     let aux =this.sMarketService.createProduct(this.myForm.value,this.eventTarget);
+    this.router.navigate(['products']);
     console.log(aux);
-    
-    /*
-     //Imagenes
-    this.eventTarget.forEach(e=>console.log(e));
-    
-    this.eventTarget.forEach(e => {
-      const filePath = `productImages/+${new Date().getTime()}_${
-        this.myForm.get("name").value
-      }`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, e);
-      this.uploadPercent = task.percentageChanges();
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.downloadURL = fileRef.getDownloadURL().subscribe(urlfile => {
-              
-              var image = {url:urlfile};
-              this.images.push(image);
-              console.log(this.images);
-            });
-          })
-        )
-        .subscribe();
-    }); */
+
 
   }
 
