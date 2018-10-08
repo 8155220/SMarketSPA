@@ -1,0 +1,21 @@
+<div class='container'>
+    <button type="button" class="btn btn-primary btn-lg">Add Product</button>
+    <div class="card-columns">
+        <div class="card animated fadeIn fast" *ngFor="let product of products; let i=index">
+            <img class="card-img-top " [src]="product.image | noimage" [alt]="product.name">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <p class="card-text"><small class="text-muted">{{product.expirationDate | date}}</small></p>
+                <!-- <button type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->
+
+                <!-- FORMA 1 (sin modificar el constructor) -->
+                <a [routerLink]="['/product',i]" class="btn btn-outline-primary"> See..</a>
+                <a [routerLink]="['/product',i]" class="btn btn-outline-dark"> Edit</a>
+                <a [routerLink]="['/product',i]" class="btn btn-outline-danger"> Delete </a>
+                <!-- FORMA 2  -->
+                <!-- <button (click)="verproduct(i)" type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->
+            </div>
+        </div>
+    </div>
+</div>
