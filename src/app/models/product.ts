@@ -1,3 +1,4 @@
+import { Image } from './image';
 export interface Product {
   productId: number;
   name: string;
@@ -10,4 +11,6 @@ export interface Product {
 
   UnitTypeId: number;
   ProductTypeId: number;
+
+  images:Image[];
 }

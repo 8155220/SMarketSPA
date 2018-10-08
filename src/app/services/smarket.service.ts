@@ -1,14 +1,21 @@
+import { Product } from './../models/product';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { UnitType } from "./../models/unit-type";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { filter, map, catchError } from "rxjs/operators";
+import { filter, map, catchError, finalize } from 'rxjs/operators';
 import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
 export class SMarketService {
   private url = "https://localhost:44351/api/";
-  constructor(private http: HttpClient) {
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
+
+  images: any[]=[];
+
+  constructor(private http: HttpClient,private storage: AngularFireStorage) {
     console.log("Services works");
     //console.log(this.getProducts());
     //this.getNewReleases();
@@ -88,6 +95,93 @@ export class SMarketService {
   deleteProductType(id: number) {
     let deleteUrl: string = `${this.url}ProductTypes/${id}`;
     return this.http.delete(deleteUrl).subscribe(res => console.log(res));
+  }
+
+  /*createProduct(product: any){
+    let postUrl: string = `${this.url}Products/`;
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+    return this.http
+      .post(postUrl, product, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" })
+      })
+      .subscribe(resp => console.log(resp));
+  }*/
+
+  async createProduct(product: any,eventTarget:any){
+    let postUrl: string = `${this.url}Products/`;
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+    let productCreated:any; 
+    let peticionCreate:any= await this.http
+      .post(postUrl, product, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" })
+      })
+      .subscribe((product2:any) => {
+          
+     //Imagenes
+    
+    eventTarget.forEach(e => {
+      const filePath = `productImages/+${new Date().getTime()}_${
+        product.name
+      }`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, e);
+      this.uploadPercent = task.percentageChanges();
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe(urlfile => {
+              var image = {url:urlfile,proudctId:product2.productId};
+              console.log(image);
+              this.createImage(image);
+            });
+          })
+        )
+        .subscribe();
+    }); 
+      }
+      );
+    
+      
+      
+  }
+
+  createImage(image:any){
+    let postUrl: string = `${this.url}Images/`;
+    return this.http
+      .post(postUrl, image, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" })
+      })
+      .subscribe(resp => console.log(resp));
+
+     
+    /*
+     //Imagenes
+    this.eventTarget.forEach(e=>console.log(e));
+    
+    this.eventTarget.forEach(e => {
+      const filePath = `productImages/+${new Date().getTime()}_${
+        this.myForm.get("name").value
+      }`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, e);
+      this.uploadPercent = task.percentageChanges();
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRef.getDownloadURL().subscribe(urlfile => {
+              
+              var image = {url:urlfile};
+              this.images.push(image);
+              console.log(this.images);
+            });
+          })
+        )
+        .subscribe();
+    }); */
   }
 
   

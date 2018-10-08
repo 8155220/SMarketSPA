@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="card col" style="width: 18rem;">
-            <img class="card-img-top" [src]="url1" onError="this.src='assets/img/noimage.png'">
+            <img class="card-img-top" [src]="imagesPreview[0]" onError="this.src='assets/img/noimage.png'">
             <div class="card-footer">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="card col" style="width: 18rem;">
-            <img class="card-img-top" [src]="url2" onError="this.src='assets/img/noimage.png'">
+            <img class="card-img-top" [src]="imagesPreview[1]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="card col" style="width: 18rem;">
-            <img class="card-img-top" [src]="url3" onError="this.src='assets/img/noimage.png'">
+            <img class="card-img-top" [src]="imagesPreview[2]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="card col" style="width: 18rem;">
-            <img class="card-img-top" [src]="url4" onError="this.src='assets/img/noimage.png'">
+            <img class="card-img-top" [src]="imagesPreview[3]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -86,11 +86,11 @@
             </div>
             <div class="form-group">
                 <label for="buyPrice">Buy Price</label>
-                <input type="number" class="form-control" id="buyPrice" formControlName="description" placeholder="Type a Buy Price">
+                <input type="number" class="form-control" id="buyPrice" formControlName="buyPrice" placeholder="Type a Buy Price">
             </div>
             <div class="form-group">
                 <label for="buyPrice">Sell Price</label>
-                <input type="number" class="form-control" id="buyPrice" formControlName="description" placeholder="Type a Sell Price">
+                <input type="number" class="form-control" id="buyPrice" formControlName="sellPrice" placeholder="Type a Sell Price">
             </div>
 
             <div class="form-group">
@@ -119,5 +119,7 @@
             <button type="submit" class="btn btn-success">Save</button>
             <button type="submit" class="btn btn-primary" (click)="onCancel()">Cancel</button>
         </form>
+
+        value:{{downloadURL | async}}
     </div>
 </div>
