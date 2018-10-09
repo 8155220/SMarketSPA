@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
+import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { environment } from '../environments/environment';
     UnitTypeComponent,
     ProductTypeComponent,
     CreateProductComponent,
+    ProductDetailComponent,
     
   ],
   imports: [

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SMarketService } from '../../services/smarket.service';
 import { Product } from '../../models/product';
@@ -10,7 +11,7 @@ import { Product } from '../../models/product';
 export class ProductComponent implements OnInit {
 
   products:Product[]=[];
-  constructor(sMarketService: SMarketService) {
+  constructor(public sMarketService: SMarketService,public route:Router) {
     sMarketService.getProducts().subscribe( (data:any)=>{
       console.log(data);
       this.products=data;
@@ -21,5 +22,19 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onDelete(index:number){
+    let product:Product = this.products[index];
+    
+    this.sMarketService.deleteProductType(product.productId);
+  }
+
+  onDetails(index:number){
+    let product:Product = this.products[index];
+    this.route.navigate(['products-detail'], { queryParams: { productId: product.productId }});
+
+    //this.sMarketService.deleteProductType(product.productId);
+  }
+
 
 }

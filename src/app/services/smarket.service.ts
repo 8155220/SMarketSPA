@@ -233,5 +233,14 @@ async createProduct(product: any,eventTarget:any){
     }); */
   }
 
+  deleteProduct (id: number) {
+    let deleteUrl: string = `${this.url}Products/${id}`;
+    return this.http.delete(deleteUrl).subscribe(res => console.log(res));
+  }
+
+  getProduct(id:number) {
+    return this.getQuery("Product/"+id);
+  }
+
   
 }

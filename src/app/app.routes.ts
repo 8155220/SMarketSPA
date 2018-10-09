@@ -3,6 +3,7 @@ import { UnitTypeComponent } from './components/unit-type/unit-type.component';
 import { RouterModule,Routes} from '@angular/router';
 import { ProductComponent } from './components/product/product.component';
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
+import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 
 
 
@@ -12,6 +13,7 @@ const APP_ROUTES: Routes = [
 
     {path: 'products',component: ProductComponent},
     {path: 'products/create',component: CreateProductComponent},
+    {path: 'products-detail',component: ProductDetailComponent},
     {path: 'unit-type',component: UnitTypeComponent},
     {path: 'product-type',component: ProductTypeComponent},
     /*{path: 'heroes',component: HeroesComponent},

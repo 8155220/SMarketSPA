@@ -11,9 +11,9 @@
                 <!-- <button type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->
 
                 <!-- FORMA 1 (sin modificar el constructor) -->
-                <a [routerLink]="['/product',i]" class="btn btn-outline-primary"> See..</a>
-                <a [routerLink]="['/product',i]" class="btn btn-outline-dark"> Edit</a>
-                <a [routerLink]="['/product',i]" class="btn btn-outline-danger"> Delete </a>
+                <a   class="btn btn-outline-primary " (click)="onDetails(i)" > See..</a>
+                <a  class="btn btn-outline-dark"> Edit</a>
+                <a class="btn btn-outline-danger" (click)="onDelete(i)"> Delete </a>
                 <!-- FORMA 2  -->
                 <!-- <button (click)="verproduct(i)" type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->
             </div>
