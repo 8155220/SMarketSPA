@@ -17,6 +17,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
+import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { ProductDetailComponent } from './components/product/product-detail/prod
     ProductTypeComponent,
     CreateProductComponent,
     ProductDetailComponent,
+    EditProductComponent,
     
   ],
   imports: [

@@ -9,8 +9,7 @@ export interface Product {
   description: string;
   image: string;
 
-  UnitTypeId: number;
-  ProductTypeId: number;
-
+  unitTypeId: number;
+  productTypeId: number;
   images:ImageModel[];
 }
