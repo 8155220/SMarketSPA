@@ -1,4 +1,4 @@
-import { Image } from "./../../../models/image";
+import { ImageModel } from "./../../../models/image";
 import { Product } from "./../../../models/product";
 import { ProductType } from "./../../../models/product-type";
 import { FormBuilder } from "@angular/forms";
@@ -25,10 +25,12 @@ export class CreateProductComponent implements OnInit {
   myForm: FormGroup;
   public dob: NgbDateStruct;
 
- // uploadPercent: Observable<number>;
- // downloadURL: Observable<string>;
+  // uploadPercent: Observable<number>;
+  // downloadURL: Observable<string>;
+  images: any[] = [];
 
-  images: any[]=[];
+  enabledImages: boolean[] = [];
+  selectedImagePos: number = -1;
 
   constructor(
     public sMarketService: SMarketService,
@@ -45,6 +47,11 @@ export class CreateProductComponent implements OnInit {
       this.unitTypes = data;
       console.log(this.unitTypes);
     });
+
+    for (let i = 0; i < 4; i++) {
+      this.enabledImages.push(false);
+    }
+    console.log(this.enabledImages);
   }
 
   ngOnInit() {
@@ -65,31 +72,19 @@ export class CreateProductComponent implements OnInit {
 
   urls = new Array<string>();
 
-  /*detectFiles(event) {
-    this.urls = [];
-    let files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.urls.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  }*/
 
   public addFile1(event: any) {
     if (event.target.files && event.target.files[0]) {
-     // this.path1 = event.target.files[0];
+      // this.path1 = event.target.files[0];
       this.eventTarget[0] = event.target.files[0];
       var reader = new FileReader();
       reader.onload = (event: any) => {
-        
         this.imagesPreview[0] = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+    //para la seleccion de la imagen principal
+    this.enabledImages[0] = true;
   }
   public addFile2(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -102,6 +97,7 @@ export class CreateProductComponent implements OnInit {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+    this.enabledImages[1] = true;
   }
   public addFile3(event: any) {
     //this.path3 = event.target.files[0];
@@ -114,6 +110,8 @@ export class CreateProductComponent implements OnInit {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+
+    this.enabledImages[2] = true;
   }
   public addFile4(event: any) {
     //this.path4 = event.target.files[0];
@@ -121,30 +119,87 @@ export class CreateProductComponent implements OnInit {
       var reader = new FileReader();
       this.eventTarget[3] = event.target.files[0];
       reader.onload = (event: any) => {
-       // this.eventTarget[3] = event.target;
+        // this.eventTarget[3] = event.target;
         this.imagesPreview[3] = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+
+    this.enabledImages[3] = true;
   }
 
   onSave() {
-    
-   
-    let expirationDate = this.myForm.get('expirationDate').value;
-    expirationDate = expirationDate.year+"-"+expirationDate.month+"-"+expirationDate.day;
-    this.myForm.get('expirationDate').setValue(expirationDate);
-    console.log(expirationDate);
+
+    let expirationDate = this.myForm.get("expirationDate").value;
+    expirationDate =
+      expirationDate.year +
+      "-" +
+      expirationDate.month +
+      "-" +
+      expirationDate.day;
+    this.myForm.get("expirationDate").setValue(expirationDate);
     let producto = this.myForm.value as Product;
-    
-    let aux =this.sMarketService.createProduct(this.myForm.value,this.eventTarget);
-    this.router.navigate(['products']);
-    console.log(aux);
 
-
+    let aux = this.sMarketService.createProduct(
+      this.myForm.value,
+      this.eventTarget,this.posSelecionadoFinal()
+    );
+    this.router.navigate(["products"]);
   }
 
   onCancel() {
     this.router.navigate(["products"]);
+  }
+
+
+  // Para imagenes Seleccionadas Logica de la vista
+  onChangePrincipalImage() {
+    if (this.selectedImagePos == -1 && this.enabledQuantity() > 0) {
+      this.selectedImagePos = this.firstEnabled();
+    } else if (this.enabledQuantity() > 1) {
+      let posActual = this.next(this.selectedImagePos);
+      for (let i = 0; i < 3; i++) {
+        if (this.enabledImages[posActual]) {
+          this.selectedImagePos = posActual;
+          break;
+        }
+        posActual = this.next(posActual);
+      }
+    }
+  }
+
+  enabledQuantity() {
+    let counter = 0;
+    this.enabledImages.forEach(e => {
+      if (e == true) counter++;
+    });
+    return counter++;
+  }
+
+  next(pos: number) {
+    if (pos == 3) return 0;
+    return ++pos;
+  }
+  firstEnabled() {
+    for (let i = 0; i < 4; i++) {
+      if (this.enabledImages[i] == true) return i;
+    }
+  }
+
+  posSelecionadoFinal(){
+    let counter=-1;
+    for(let i=0;i<4;i++){
+      if(this.enabledImages[i])
+      counter++;
+      if(i==this.selectedImagePos)
+      {
+        console.log('Final seleccionado :'+counter);
+        
+        return counter;
+      }
+    }
+    console.log('Final seleccionado :'+counter);
+    return -1;
+
   }
 }

@@ -1,31 +1,100 @@
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-sm" style="width: 18rem;">
+            <img class="card-img-top" [src]="product.image " onError="this.src='assets/img/noimage.png'"  >
+        </div>
+        <div class="col-sm" style="width: 18rem;">
+            <img class="card-img-top" [src]="product.images[1].url | noimage" onError="this.src='assets/img/noimage.png'"  >
+        </div>
+        <div class="col-sm" style="width: 18rem;">
+            <img class="card-img-top" [src]="product.images[2].url | noimage " onError="this.src='assets/img/noimage.png'"  >
+        </div>
+        <div class="col-sm" style="width: 18rem;">
+            <img class="card-img-top" [src]="product.images[3].url | noimage " onError="this.src='assets/img/noimage.png'"  >
+        </div>
+
+    </div>
+
+</div>
+
+<div class='container'>
+    <div class="align-content-center">
+        <div class="" style="width: 10px;">
+            <h5 class="card-title">Name :{{product.name}}</h5>
+            <p class="card-text">Description : {{product.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Provider: {{product.provider}}</li>
+            <li class="list-group-item">Sell Price: {{product.sellPrice}}</li>
+            <li class="list-group-item">Buy Price: {{product.buyPrice}}</li>
+        </ul>
+        <div class="card-body" style="width: 10px;">
+            <h5 class="card-title">Name :{{product.name}}</h5>
+            <p class="card-text">Description : {{product.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Provider: {{product.provider}}</li>
+            <li class="list-group-item">Sell Price: {{product.sellPrice}}</li>
+            <li class="list-group-item">Buy Price: {{product.buyPrice}}</li>
+        </ul>
+        <div class="card-footer bg-transparent border-success">Expiration Date {{product.expirationDate | date }}</div>
+    </div>
+</div> -->
+
+
+
 <div class="container">
-  <div class="row">
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" [src]="product.image "  onError="this.src='assets/img/noimage.png'" alt="Card image cap">
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" [src]="product.images[1].url | noimage" onError="this.src='assets/img/noimage.png'" alt="Card image cap">
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" [src]="product.images[2].url | noimage " onError="this.src='assets/img/noimage.png'" alt="Card image cap">
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" [src]="product.images[3].url | noimage "onError="this.src='assets/img/noimage.png'"  alt="Card image cap">
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-3">
+            <img class="img-thumbnail" [src]="product.images[0].url " onError="this.src='assets/img/noimage.png'" width="200" height="200">
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <img class="img-thumbnail" [src]="product.images[1].url " onError="this.src='assets/img/noimage.png'" width="200" height="200">
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <img class="img-thumbnail" [src]="product.images[2].url " onError="this.src='assets/img/noimage.png'" width="200" height="200">
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <img class="img-thumbnail" [src]="product.images[3].url " onError="this.src='assets/img/noimage.png'" width="200" height="200">
+        </div>
     </div>
 
-  </div>
-  <div class="card" style="width: 18rem;">
+    <div class="card text-center">
+        <div class="card-header">
+            <h1> Name :
+                <small class="text-muted">{{product.name}}</small>
+            </h1>
+        </div>
+        <div class="card-body">
 
-    <!-- <img class="card-img-top" [src]="product.image | noimage" alt="Card image cap"> -->
-    <div class="card-body">
-      <h5 class="card-title">Name :{{product.name}}</h5>
-      <p class="card-text">Description : {{product.description}}</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h3> Description :
+                        <small class="text-muted"> {{product.description}}</small>
+                    </h3>
+                </li>
+                <li class="list-group-item">
+                    <h3> Provider :
+                        <small class="text-muted"> {{product.provider}}</small>
+                    </h3>
+                </li>
+                <li class="list-group-item">
+                    <h3> Sell Price: :
+                        <small class="text-muted"> {{product.sellPrice | currency}}</small>
+                    </h3>
+                </li>
+                <li class="list-group-item">
+                    <h3> Buy Price :
+                        <small class="text-muted"> {{product.buyPrice  | currency}}</small>
+                    </h3>
+                </li>
+                <li class="list-group-item">
+                    <h3> Expiration Date :
+                        <small class="text-muted"> {{product.expirationDate | date }}</small>
+                    </h3>
+                </li>
+            </ul>
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Provider: {{product.provider}}</li>
-      <li class="list-group-item">Sell Price: {{product.sellPrice}}</li>
-      <li class="list-group-item">Buy Price: {{product.buyPrice}}</li>
-    </ul>
-    <div class="card-footer bg-transparent border-success">Expiration Date {{product.expirationDate | date }}</div>
-  </div>
 </div>

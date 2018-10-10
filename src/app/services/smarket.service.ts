@@ -1,9 +1,10 @@
-import { Product } from './../models/product';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { ImageModel } from './../models/image';
+import { Product } from "./../models/product";
+import { AngularFireStorage } from "@angular/fire/storage";
 import { UnitType } from "./../models/unit-type";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { filter, map, catchError, finalize } from 'rxjs/operators';
+import { filter, map, catchError, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root"
@@ -13,9 +14,9 @@ export class SMarketService {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
 
-  images: any[]=[];
+  images: any[] = [];
 
-  constructor(private http: HttpClient,private storage: AngularFireStorage) {
+  constructor(private http: HttpClient, private storage: AngularFireStorage) {
     console.log("Services works");
     //console.log(this.getProducts());
     //this.getNewReleases();
@@ -107,7 +108,7 @@ export class SMarketService {
       })
       .subscribe(resp => console.log(resp));
   }*/
-/*
+  /*
   async createProduct(product: any,eventTarget:any){
     let postUrl: string = `${this.url}Products/`;
     let headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -145,18 +146,23 @@ export class SMarketService {
       );
   }
 */
-async createProduct(product: any,eventTarget:any){
-  let postUrl: string = `${this.url}Products/`;
-  let headers = new HttpHeaders().set("Content-Type", "application/json");
+  async createProduct(
+    product: any,
+    eventTarget: any,
+    posPrincipalImage: number
+  ) {
+    console.log('Productos 2:');
+    
+    console.log(product);
+    
+    let postUrl: string = `${this.url}Products/`;
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
 
-  let productCreated:any; 
- 
-
-     let counter:number = 0;
+    let counter: number = 0;
     eventTarget.forEach(e => {
       const filePath = `productImages/+${new Date().getTime()}_${
         product.name
-      }`;
+      }_${e.lastModified}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, e);
       this.uploadPercent = task.percentageChanges();
@@ -165,82 +171,62 @@ async createProduct(product: any,eventTarget:any){
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(urlfile => {
-              counter++;
-              console.log('Contador :'+counter);
-              var image = {url:urlfile};
-              this.images.push(image);
-              if (counter==4){
-                product.images=this.images;
-                product.image=this.images[0].url;
-                let peticionCreate:any= this.http
-                .post(postUrl, product, {
-                  headers: new HttpHeaders({ "Content-Type": "application/json" })
-                })
-                .subscribe((product2:any) => {
-                }
-                );
+              // console.log("downloadUrl :"+urlfile);
+              // console.log('Contador :'+counter);
+              // console.log('Images :'+this.images);
+              
+              // let image = { url: urlfile };
+              let image = new ImageModel();
+              image.url=urlfile;
+              if(counter==posPrincipalImage){
+                image.isMain=true;
               }
-              console.log(image);
+              this.images.push(image);
+
+              if (counter == eventTarget.length - 1) {
+                product.images = this.images;
+                product.image = this.images[posPrincipalImage].url;
+                let peticionCreate: any = this.http
+                  .post(postUrl, product, {
+                    headers: new HttpHeaders({
+                      "Content-Type": "application/json"
+                    })
+                  })
+                  .subscribe((product2: any) => {});
+              }
+              console.log(this.images);
               //this.createImage(image);
+              counter++;
             });
           })
         )
         .subscribe();
-    }); 
+    });
 
-    /*let peticionCreate:any= await this.http
-    .post(postUrl, product, {
-      headers: new HttpHeaders({ "Content-Type": "application/json" })
-    })
-    .subscribe((product2:any) => {
+    if (eventTarget.length == 0) {
+      return  this.http
+        .post(postUrl, product, {
+          headers: new HttpHeaders({ "Content-Type": "application/json" })
+        })
+        .subscribe((product2: any) => {});
     }
-    );*/
-}
+  }
 
-  createImage(image:any){
+  createImage(image: any) {
     let postUrl: string = `${this.url}Images/`;
     return this.http
       .post(postUrl, image, {
         headers: new HttpHeaders({ "Content-Type": "application/json" })
       })
       .subscribe(resp => console.log(resp));
-
-     
-    /*
-     //Imagenes
-    this.eventTarget.forEach(e=>console.log(e));
-    
-    this.eventTarget.forEach(e => {
-      const filePath = `productImages/+${new Date().getTime()}_${
-        this.myForm.get("name").value
-      }`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, e);
-      this.uploadPercent = task.percentageChanges();
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.downloadURL = fileRef.getDownloadURL().subscribe(urlfile => {
-              
-              var image = {url:urlfile};
-              this.images.push(image);
-              console.log(this.images);
-            });
-          })
-        )
-        .subscribe();
-    }); */
   }
 
-  deleteProduct (id: number) {
+  deleteProduct(id: number) {
     let deleteUrl: string = `${this.url}Products/${id}`;
     return this.http.delete(deleteUrl).subscribe(res => console.log(res));
   }
 
-  getProduct(id:number) {
-    return this.getQuery("Product/"+id);
+  getProduct(id: number) {
+    return this.getQuery("Product/" + id);
   }
-
-  
 }

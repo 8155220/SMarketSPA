@@ -26,7 +26,7 @@ export class ProductComponent implements OnInit {
   onDelete(index:number){
     let product:Product = this.products[index];
     
-    this.sMarketService.deleteProductType(product.productId);
+    this.sMarketService.deleteProduct(product.productId);
   }
 
   onDetails(index:number){

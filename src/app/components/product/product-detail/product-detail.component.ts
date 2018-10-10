@@ -1,7 +1,9 @@
+import { ImageModel } from './../../../models/image';
 import { Product } from "./../../../models/product";
 import { SMarketService } from "./../../../services/smarket.service";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
+//import { ImageModel } from '../../../models/image';
 
 @Component({
   selector: "app-product-detail",
@@ -19,13 +21,14 @@ export class ProductDetailComponent implements OnInit {
       console.log(params);
 
       let id = params["productId"];
-      sMarketService
-        .getProduct(id)
-        .subscribe((data: Product) => {
-          this.product = data;
-          console.log(this.product);
-          
-        });
+      sMarketService.getProduct(id).subscribe((data: Product) => {
+        this.product = data;
+        for(let i=this.product.images.length;i<4;i++){
+          let image:ImageModel= new ImageModel();
+          image.url="assets/img/noimage.png";
+          this.product.images.push(image);
+        }
+      });
     });
   }
 

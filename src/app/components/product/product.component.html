@@ -4,6 +4,8 @@
     <div class="card-columns">
         <div class="card animated fadeIn fast" *ngFor="let product of products; let i=index">
             <img class="card-img-top " [src]="product.image | noimage" [alt]="product.name">
+            <!-- <img class="card-img-top " [src]="a==true ? 'assets/img/noimage.png' : 'assets/img/noimage.png'" [alt]="product.name"> -->
+            <!-- <img class="card-img-top " [src]="a==true ? 'assets/img/noimage.png' : 'assets/img/noimage.png'" [alt]="product.name"> -->
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
@@ -11,8 +13,8 @@
                 <!-- <button type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->
 
                 <!-- FORMA 1 (sin modificar el constructor) -->
-                <a   class="btn btn-outline-primary " (click)="onDetails(i)" > See..</a>
-                <a  class="btn btn-outline-dark"> Edit</a>
+                <a class="btn btn-outline-primary " (click)="onDetails(i)"> See..</a>
+                <a class="btn btn-outline-dark"> Edit</a>
                 <a class="btn btn-outline-danger" (click)="onDelete(i)"> Delete </a>
                 <!-- FORMA 2  -->
                 <!-- <button (click)="verproduct(i)" type="button" class="btn btn-outline-primary btn-block">Ver mas...</button> -->

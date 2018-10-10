@@ -2,8 +2,10 @@
 <hr> -->
 
 <div class="container">
-    <div class="row">
-        <div class="card col" style="width: 18rem;">
+
+    <div class="row ">
+
+        <div class="card col" [ngClass]="{'selected':selectedImagePos==0}" style="width: 18rem;">
             <img class="card-img-top" [src]="imagesPreview[0]" onError="this.src='assets/img/noimage.png'">
             <div class="card-footer">
                 <div class="input-group mb-3">
@@ -17,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="card col" style="width: 18rem;">
+        <div class="card col" [ngClass]="{'selected':selectedImagePos==1}" style="width: 18rem;">
             <img class="card-img-top" [src]="imagesPreview[1]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
@@ -31,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="card col" style="width: 18rem;">
+        <div class="card col" [ngClass]="{'selected':selectedImagePos==2}" style="width: 18rem;">
             <img class="card-img-top" [src]="imagesPreview[2]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
@@ -45,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="card col" style="width: 18rem;">
+        <div class="card col" [ngClass]="{'selected':selectedImagePos==3}" style="width: 18rem;">
             <img class="card-img-top" [src]="imagesPreview[3]" onError="this.src='assets/img/noimage.png'">
             <div class="card-body">
                 <div class="input-group mb-3">
@@ -61,6 +63,7 @@
         </div>
 
     </div>
+    <a class="btn btn-info" (click)="onChangePrincipalImage()">Change Principal</a>
 
     <div class="row">
 
