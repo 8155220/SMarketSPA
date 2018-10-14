@@ -98,7 +98,7 @@ export class SMarketService {
     return this.http.delete(deleteUrl).subscribe(res => console.log(res));
   }
 
-  /*createProduct(product: any){
+ /* createProduct(product: any){
     let postUrl: string = `${this.url}Products/`;
     let headers = new HttpHeaders().set("Content-Type", "application/json");
 
@@ -108,57 +108,20 @@ export class SMarketService {
       })
       .subscribe(resp => console.log(resp));
   }*/
-  /*
-  async createProduct(product: any,eventTarget:any){
-    let postUrl: string = `${this.url}Products/`;
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-
-    let productCreated:any; 
-    let peticionCreate:any= await this.http
-      .post(postUrl, product, {
-        headers: new HttpHeaders({ "Content-Type": "application/json" })
-      })
-      .subscribe((product2:any) => {
-          
-     //Imagenes
-    
-    eventTarget.forEach(e => {
-      const filePath = `productImages/+${new Date().getTime()}_${
-        product.name
-      }`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, e);
-      this.uploadPercent = task.percentageChanges();
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe(urlfile => {
-              var image = {url:urlfile,proudctId:product2.productId};
-              console.log(image);
-              this.createImage(image);
-            });
-          })
-        )
-        .subscribe();
-    }); 
-      }
-      );
-  }
-*/
+  
   async createProduct(
     product: any,
     eventTarget: any,
     posPrincipalImage: number
   ) {
-    console.log("Productos 2:");
-
+    console.log('Productos 2:');
+    
     console.log(product);
-
+    
     let postUrl: string = `${this.url}Products/`;
     let headers = new HttpHeaders().set("Content-Type", "application/json");
 
-    /*let counter: number = 0;
+    let counter: number = 0;
     eventTarget.forEach(e => {
       const filePath = `productImages/+${new Date().getTime()}_${
         product.name
@@ -171,14 +134,23 @@ export class SMarketService {
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(urlfile => {
+               console.log("downloadUrl :"+urlfile);
+               console.log('Contador :'+counter);
+              
+              // let image = { url: urlfile };
               let image = new ImageModel();
-              image.url = urlfile;
-              if (counter == posPrincipalImage) {
-                image.isMain = true;
+              image.url=urlfile;
+              if(counter==posPrincipalImage){
+                image.isMain=true;
               }
               this.images.push(image);
 
               if (counter == eventTarget.length - 1) {
+               console.log('Images :');
+               console.log(this.images);
+              console.log('posPrincipalImage:'+ posPrincipalImage);
+                
+
                 product.images = this.images;
                 product.image = this.images[posPrincipalImage].url;
                 let peticionCreate: any = this.http
@@ -196,30 +168,18 @@ export class SMarketService {
           })
         )
         .subscribe();
-    });*/
+    });
 
-    let img1 = this.storage
-      .upload(`productImages/producto1`, eventTarget[0])
-      .snapshotChanges().pipe(map(e=> console.log(e)));
-
-    let img2 = this.storage
-      .upload("productImages/producto2", eventTarget[1])
-      .snapshotChanges();
-    let img3 = this.storage
-      .upload("productImages/producto3", eventTarget[2])
-      .snapshotChanges();
-    let urlImgs = forkJoin([img1, img2, img3])
-      .pipe(finalize(() => console.log("Finalize")))
-      .subscribe();
-/*
     if (eventTarget.length == 0) {
-      return this.http
+      return  this.http
         .post(postUrl, product, {
           headers: new HttpHeaders({ "Content-Type": "application/json" })
         })
         .subscribe((product2: any) => {});
-    }*/
+    }
   }
+
+
   /*async createProduct(
     product: any,
     eventTarget: any,
@@ -245,9 +205,8 @@ export class SMarketService {
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(urlfile => {
-              // console.log("downloadUrl :"+urlfile);
-              // console.log('Contador :'+counter);
-              // console.log('Images :'+this.images);
+               console.log("downloadUrl :"+urlfile);
+               console.log('Contador :'+counter);
               
               // let image = { url: urlfile };
               let image = new ImageModel();
@@ -258,6 +217,11 @@ export class SMarketService {
               this.images.push(image);
 
               if (counter == eventTarget.length - 1) {
+               console.log('Images :');
+               console.log(this.images);
+              console.log('posPrincipalImage:'+ posPrincipalImage);
+                
+
                 product.images = this.images;
                 product.image = this.images[posPrincipalImage].url;
                 let peticionCreate: any = this.http

@@ -4,10 +4,8 @@
 
 <div class="container div-body">
 
-    <!-- <app-select-image  (fileAdded)="onAddedFile($event)" ></app-select-image> -->
-    <app-select-image (fileAdded)="onAddedFile($event)" (fileDeleted)="onDeletedFile($event)"></app-select-image>
-    <div class="row ">
-
+    <app-select-image (fileAdded)="onAddedFile($event)" (fileDeleted)="onDeletedFile($event)" (selectedImageEmitter)="selectedImage($event)"></app-select-image>
+    <!-- <div class="row ">
         <div class="card col" [ngClass]="{'selected':selectedImagePos==0}" style="width: 18rem;">
             <img class="card-img-top" [src]="imagesPreview[0]" onError="this.src='assets/img/noimage.png'">
             <div class="card-footer">
@@ -66,7 +64,7 @@
         </div>
 
     </div>
-    <a class="btn btn-info" (click)="onChangePrincipalImage()">Change Principal</a>
+    <a class="btn btn-info" (click)="onChangePrincipalImage()">Change Principal</a> -->
 
     <div class="row">
 

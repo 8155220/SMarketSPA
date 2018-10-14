@@ -6,8 +6,8 @@
         </div>
     </div>
     <div class='row'>
-        <div class=' col-sm-2 ' *ngFor='let url of dataUrls'>
-            <img class="img-thumbnail" height='100px' [src]="url">
+        <div class=' col-sm-2 ' *ngFor='let url of dataUrls; let i=index;'>
+            <img class="img-thumbnail" [ngClass]="{'selected':selectedImagePos==i}" (click)="selectedImage(i)" height='100px' [src]="url">
         </div>
     </div>
     <div class="row justify-content-end m-5">

@@ -13,7 +13,7 @@
 .delete-button {
     -webkit-transition: -webkit-transform .8s ease-in-out;
     transition: transform .8s ease-in-out;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     position: absolute;
     /* animation-iteration-count: infinite; */
 }
@@ -35,7 +35,32 @@
 }
 
 .delete-button:hover {
-    /* -webkit-transform: rotate(180deg);
-    transform: rotate(180deg); */
     transform: rotateY(180deg);
+}
+
+.selected {
+    padding: 20px;
+    box-shadow: 0 0 10px 5px #007bff;
+    /* outline-color: 5px solid black; */
+    /* border-style: dashed;
+    border-color: #007bff;
+    border-width: 2px; */
+    /* padding: 10px; */
+    /* transition: background-position 2s; */
+    animation: border-dance 2s infinite ease-in-out;
+}
+
+@keyframes border-dance {
+    0% {
+        box-shadow: 0 0 10px 1px #71b5fd;
+        /* border-width: 1px; */
+    }
+    50% {
+        box-shadow: 0 0 10px 5px #007bff;
+        /* border-width: 3px; */
+    }
+    100% {
+        box-shadow: 0 0 10px 1px #71b5fd;
+        /* border-width: 1px; */
+    }
 }
