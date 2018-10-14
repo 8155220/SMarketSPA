@@ -1,0 +1,18 @@
+<input type="file" accept='image/*' (change)='onChange($event)' multiple hidden #file>
+<div class="container">
+    <div class="row justify-content-between  m-5  ">
+        <div class="col-1">
+            <div (click)="file.click()" class='btn btn-primary btn-lg  add-button '><i class="fas fa-plus "></i> </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class=' col-sm-2 ' *ngFor='let url of dataUrls'>
+            <img class="img-thumbnail" height='100px' [src]="url">
+        </div>
+    </div>
+    <div class="row justify-content-end m-5">
+        <div class="col-1 rounded ">
+            <div *ngIf='dataUrls.length>0' (click)="deleteImage()" class='btn btn-danger btn-lg delete-button text-align: center'><i class="fas fa-minus"></i> </div>
+        </div>
+    </div>
+</div>

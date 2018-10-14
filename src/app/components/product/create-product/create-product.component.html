@@ -1,8 +1,11 @@
 <!-- <h1 class="animated fadeIn">{{heroe.nombre | uppercase }}<small> ({{heroe.aparicion | date:'y'}})</small></h1>
 <hr> -->
 
-<div class="container">
 
+<div class="container div-body">
+
+    <!-- <app-select-image  (fileAdded)="onAddedFile($event)" ></app-select-image> -->
+    <app-select-image (fileAdded)="onAddedFile($event)" (fileDeleted)="onDeletedFile($event)"></app-select-image>
     <div class="row ">
 
         <div class="card col" [ngClass]="{'selected':selectedImagePos==0}" style="width: 18rem;">

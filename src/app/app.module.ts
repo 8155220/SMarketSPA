@@ -1,3 +1,4 @@
+import { SelectImageComponent } from './components/shared/select-image/select-image.component';
 import { NoimagePipe } from './pipes/noimage.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -29,6 +30,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
     CreateProductComponent,
     ProductDetailComponent,
     EditProductComponent,
+    SelectImageComponent
     
   ],
   imports: [

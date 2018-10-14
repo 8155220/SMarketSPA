@@ -17,6 +17,8 @@ import { finalize } from "rxjs/operators";
   styleUrls: ["./create-product.component.css"]
 })
 export class CreateProductComponent implements OnInit {
+  files:any[]=[];
+
   eventTarget: any[] = [];
   imagesPreview: string[] = [];
 
@@ -200,6 +202,15 @@ export class CreateProductComponent implements OnInit {
     }
     console.log('Final seleccionado :'+counter);
     return -1;
+  }
 
+  onAddedFile($event){
+    console.log('EventoRecibido');
+    console.log($event);
+    this.files.push($event);
+  }
+
+  onDeletedFile($event){
+    if($event) this.files.pop();
   }
 }

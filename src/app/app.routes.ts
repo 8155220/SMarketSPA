@@ -5,9 +5,11 @@ import { ProductComponent } from './components/product/product.component';
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
+import { SelectImageComponent } from './components/shared/select-image/select-image.component';
 const APP_ROUTES: Routes = [
 
     {path: 'products',component: ProductComponent},
+    {path: 'select',component: SelectImageComponent},
     {path: 'products/create',component: CreateProductComponent},
     {path: 'products-detail',component: ProductDetailComponent},
     {path: 'product-edit',component: EditProductComponent},
