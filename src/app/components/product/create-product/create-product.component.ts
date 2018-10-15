@@ -11,12 +11,14 @@ import { Router } from "@angular/router";
 //import { Observable } from "rxjs/Observable";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { finalize } from "rxjs/operators";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-create-product",
   templateUrl: "./create-product.component.html",
   styleUrls: ["./create-product.component.css"]
 })
 export class CreateProductComponent implements OnInit {
+  allPercentage:number=0;
   files:any[]=[];
   selectedImagePos:number;
 
@@ -74,11 +76,14 @@ export class CreateProductComponent implements OnInit {
     this.myForm.get("expirationDate").setValue(this.getExpirationDate());
     //let producto = this.myForm.value as Product;
 
-    let aux = this.sMarketService.createProduct(
+    this.sMarketService.createProduct(
       this.myForm.value,
       this.files,this.selectedImagePos
-    );
+    ).subscribe(e=>{
+      this.allPercentage=e;
+      if(e==100)
     this.router.navigate(["products"]);
+    });
   }
 
   onCancel() {

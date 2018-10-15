@@ -8,7 +8,7 @@ export interface Product {
   expirationDate: Date;
   description: string;
   image: string;
-
+  created:Date;
   unitTypeId: number;
   productTypeId: number;
   images:ImageModel[];

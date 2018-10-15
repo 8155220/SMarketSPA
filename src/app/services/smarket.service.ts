@@ -4,8 +4,15 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { UnitType } from "./../models/unit-type";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { filter, map, catchError, finalize } from "rxjs/operators";
-import { Observable, forkJoin } from "rxjs";
+import {
+  filter,
+  map,
+  catchError,
+  finalize,
+  switchMap,
+  tap
+} from "rxjs/operators";
+import { Observable, forkJoin, from, combineLatest } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
@@ -15,6 +22,8 @@ export class SMarketService {
   downloadURL: Observable<string>;
 
   images: any[] = [];
+
+  allPercentage: Observable<any>;
 
   constructor(private http: HttpClient, private storage: AngularFireStorage) {
     console.log("Services works");
@@ -40,6 +49,9 @@ export class SMarketService {
 
   getProductTypes() {
     return this.getQuery("ProductTypes");
+  }
+  getLastProducts() {
+    return this.getQuery("Products/last");
   }
 
   createUnitType(unitType: any) {
@@ -98,7 +110,7 @@ export class SMarketService {
     return this.http.delete(deleteUrl).subscribe(res => console.log(res));
   }
 
- /* createProduct(product: any){
+  /* createProduct(product: any){
     let postUrl: string = `${this.url}Products/`;
     let headers = new HttpHeaders().set("Content-Type", "application/json");
 
@@ -108,77 +120,6 @@ export class SMarketService {
       })
       .subscribe(resp => console.log(resp));
   }*/
-  
-  async createProduct(
-    product: any,
-    eventTarget: any,
-    posPrincipalImage: number
-  ) {
-    console.log('Productos 2:');
-    
-    console.log(product);
-    
-    let postUrl: string = `${this.url}Products/`;
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-
-    let counter: number = 0;
-    eventTarget.forEach(e => {
-      const filePath = `productImages/+${new Date().getTime()}_${
-        product.name
-      }_${e.lastModified}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, e);
-      this.uploadPercent = task.percentageChanges();
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe(urlfile => {
-               console.log("downloadUrl :"+urlfile);
-               console.log('Contador :'+counter);
-              
-              // let image = { url: urlfile };
-              let image = new ImageModel();
-              image.url=urlfile;
-              if(counter==posPrincipalImage){
-                image.isMain=true;
-              }
-              this.images.push(image);
-
-              if (counter == eventTarget.length - 1) {
-               console.log('Images :');
-               console.log(this.images);
-              console.log('posPrincipalImage:'+ posPrincipalImage);
-                
-
-                product.images = this.images;
-                product.image = this.images[posPrincipalImage].url;
-                let peticionCreate: any = this.http
-                  .post(postUrl, product, {
-                    headers: new HttpHeaders({
-                      "Content-Type": "application/json"
-                    })
-                  })
-                  .subscribe((product2: any) => {});
-              }
-              console.log(this.images);
-              //this.createImage(image);
-              counter++;
-            });
-          })
-        )
-        .subscribe();
-    });
-
-    if (eventTarget.length == 0) {
-      return  this.http
-        .post(postUrl, product, {
-          headers: new HttpHeaders({ "Content-Type": "application/json" })
-        })
-        .subscribe((product2: any) => {});
-    }
-  }
-
 
   /*async createProduct(
     product: any,
@@ -338,5 +279,67 @@ export class SMarketService {
 
   getProduct(id: number) {
     return this.getQuery("Product/" + id);
+  }
+
+  createProduct(
+    product: any,
+    files: any,
+    posPrincipalImage: number
+  ): Observable<number> {
+    let postUrl: string = `${this.url}Products/`;
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+    const allPercentage: Observable<number>[] = [];
+    let counter = 0;
+    for (const file of files) {
+      const path = `productImages/+${new Date().getTime()}_${product.name}_${
+        file.lastModified
+      }`;
+      const ref = this.storage.ref(path);
+      const task = this.storage.upload(path, file);
+      const _percentage$ = task.percentageChanges();
+      allPercentage.push(_percentage$);
+
+      const _t = task.then(f => {
+        return f.ref.getDownloadURL().then(urlfile => {
+          let image = new ImageModel();
+          image.url = urlfile;
+          if (counter == posPrincipalImage) {
+            image.isMain = true;
+          }
+          this.images.push(image);
+          if (counter == files.length - 1) {
+            product.images = this.images;
+            product.image = this.images[posPrincipalImage].url;
+            
+            console.log('Entro peticiones');
+            
+            this.http.post(postUrl, product, {
+              //cambiar por headers
+              headers: new HttpHeaders({
+                "Content-Type": "application/json"
+              })
+            }).subscribe( success=> console.log(success),error=>console.log(error)
+            
+            );
+
+          }
+          counter++;
+        });
+      });
+    }
+
+    this.allPercentage = combineLatest(allPercentage).pipe(
+      map(percentages => {
+        let result = 0;
+        for (const percentage of percentages) {
+          result = result + percentage;
+        }
+        return result / percentages.length;
+      }),
+      tap(console.log)
+    );
+
+    return this.allPercentage;
   }
 }

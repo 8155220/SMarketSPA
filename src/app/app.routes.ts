@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/shared/home/home.component';
 import { ProductTypeComponent } from './components/product-type/product-type.component';
 import { UnitTypeComponent } from './components/unit-type/unit-type.component';
 import { RouterModule,Routes} from '@angular/router';
@@ -8,6 +9,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
 import { SelectImageComponent } from './components/shared/select-image/select-image.component';
 const APP_ROUTES: Routes = [
 
+    {path: 'home',component: HomeComponent},
     {path: 'products',component: ProductComponent},
     {path: 'select',component: SelectImageComponent},
     {path: 'products/create',component: CreateProductComponent},
@@ -19,7 +21,7 @@ const APP_ROUTES: Routes = [
     {path: 'heroe/:id',component: HeroeComponent},
     {path: 'about',component: AboutComponent},
     {path: 'searchHero/:termino',component: SearchHeroComponent},*/
-    {path: '**',pathMatch:'full',redirectTo:''},
+    {path: '**',pathMatch:'full',redirectTo:'home'},
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES);

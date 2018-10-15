@@ -19,6 +19,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { HomeComponent } from './components/shared/home/home.component';
+import { CarouselComponent } from './components/shared/carousel/carousel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,10 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
     CreateProductComponent,
     ProductDetailComponent,
     EditProductComponent,
-    SelectImageComponent
+    SelectImageComponent,
+    FooterComponent,
+    HomeComponent,
+    CarouselComponent
     
   ],
   imports: [
@@ -40,7 +46,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
     ReactiveFormsModule,
     NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [SMarketService],
   bootstrap: [AppComponent]
