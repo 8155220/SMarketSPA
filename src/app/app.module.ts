@@ -10,7 +10,7 @@ import { ProductComponent } from './components/product/product.component';
 import { SMarketService } from './services/smarket.service';
 import { UnitTypeComponent } from './components/unit-type/unit-type.component';
 import { ProductTypeComponent } from './components/product-type/product-type.component';
-
+import { FormsModule }   from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +22,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { CarouselComponent } from './components/shared/carousel/carousel.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,11 +37,13 @@ import { CarouselComponent } from './components/shared/carousel/carousel.compone
     SelectImageComponent,
     FooterComponent,
     HomeComponent,
-    CarouselComponent
+    CarouselComponent,
+    ContactUsComponent
     
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     APP_ROUTING,
     ReactiveFormsModule,

@@ -1,3 +1,4 @@
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { ProductTypeComponent } from './components/product-type/product-type.component';
 import { UnitTypeComponent } from './components/unit-type/unit-type.component';
@@ -9,6 +10,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
 import { SelectImageComponent } from './components/shared/select-image/select-image.component';
 const APP_ROUTES: Routes = [
 
+    {path: 'contact-us',component: ContactUsComponent},
     {path: 'home',component: HomeComponent},
     {path: 'products',component: ProductComponent},
     {path: 'select',component: SelectImageComponent},

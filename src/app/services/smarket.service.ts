@@ -342,4 +342,13 @@ export class SMarketService {
 
     return this.allPercentage;
   }
+
+
+  createContactUs(contactUs: any) {
+    let postUrl: string = `${this.url}ContactUs/`;
+    let header = new HttpHeaders().set("Content-Type", "application/json");
+
+    return this.http
+      .post(postUrl, contactUs, {headers:header});
+  }
 }

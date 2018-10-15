@@ -1,0 +1,19 @@
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
+.business-header {
+    height: 50vh;
+    min-height: 300px;
+    background: url('http://rankingroup.com/wp-content/uploads/2015/10/warehouse-banner.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.card {
+    height: 100%;
+}
