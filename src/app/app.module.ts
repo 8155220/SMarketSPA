@@ -23,6 +23,8 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { CarouselComponent } from './components/shared/carousel/carousel.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { NoteAddComponent } from './components/note/note-add/note-add.component';
+import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,9 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
     FooterComponent,
     HomeComponent,
     CarouselComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    NoteAddComponent,
+    NoteDetailComponent
     
   ],
   imports: [

@@ -1,3 +1,5 @@
+import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
+import { NoteAddComponent } from './components/note/note-add/note-add.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { HomeComponent } from './components/shared/home/home.component';
 import { ProductTypeComponent } from './components/product-type/product-type.component';
@@ -10,6 +12,8 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
 import { SelectImageComponent } from './components/shared/select-image/select-image.component';
 const APP_ROUTES: Routes = [
 
+    {path: 'note/detail',component: NoteDetailComponent},
+    {path: 'note/add',component: NoteAddComponent},
     {path: 'contact-us',component: ContactUsComponent},
     {path: 'home',component: HomeComponent},
     {path: 'products',component: ProductComponent},

@@ -5,66 +5,6 @@
 <div class="container div-body">
 
     <app-select-image (fileAdded)="onAddedFile($event)" (fileDeleted)="onDeletedFile($event)" (selectedImageEmitter)="selectedImage($event)"></app-select-image>
-    <!-- <div class="row ">
-        <div class="card col" [ngClass]="{'selected':selectedImagePos==0}" style="width: 18rem;">
-            <img class="card-img-top" [src]="imagesPreview[0]" onError="this.src='assets/img/noimage.png'">
-            <div class="card-footer">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Select</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="addFile1($event)">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card col" [ngClass]="{'selected':selectedImagePos==1}" style="width: 18rem;">
-            <img class="card-img-top" [src]="imagesPreview[1]" onError="this.src='assets/img/noimage.png'">
-            <div class="card-body">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Select</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile02" (change)="addFile2($event)">
-                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card col" [ngClass]="{'selected':selectedImagePos==2}" style="width: 18rem;">
-            <img class="card-img-top" [src]="imagesPreview[2]" onError="this.src='assets/img/noimage.png'">
-            <div class="card-body">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Select</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile03" (change)="addFile3($event)">
-                        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card col" [ngClass]="{'selected':selectedImagePos==3}" style="width: 18rem;">
-            <img class="card-img-top" [src]="imagesPreview[3]" onError="this.src='assets/img/noimage.png'">
-            <div class="card-body">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Select</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile04" (change)="addFile4($event)">
-                        <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <a class="btn btn-info" (click)="onChangePrincipalImage()">Change Principal</a> -->
 
     <div class="row" *ngIf='allPercentage==0'>
 
