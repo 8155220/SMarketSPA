@@ -15,9 +15,11 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
     trigger('incrementFontSize',[
       state('small', style({
         'font-size':'15px',
+        'color':'white',
     })),
     state('large', style({
       'font-size':'15px',
+      'color':'white',
     })),
     transition('small <=> large', animate('200ms ease-in', keyframes([
       style({opacity: 0, 'font-size':'15px', offset: 0}),

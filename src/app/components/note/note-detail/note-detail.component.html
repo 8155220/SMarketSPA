@@ -1,87 +1,87 @@
 <div class="container">
-    {{myForm.value | json}}
-    <form [formGroup]='myForm'>
-        <div class="row">
-            <div class="col-md-1">
+    <div class="container">
+        <!-- {{myForm.value | json}} -->
+        <form [formGroup]='myForm'>
+            <div class="row">
 
-            </div>
-            <div class="col-md-1" *ngIf='product'>
-                <div class="form-group">
-                    <label for="dob-input"><strong>Quantity</strong></label>
-                    <input type='number' class='form-control' placeholder="" min="0" formControlName='quantity'>
+                <div class="col-md-2" *ngIf='product'>
+                    <div class="form-group">
+                        <label for="dob-input"><strong>Quantity</strong></label>
+                        <input type='number' class='form-control' placeholder="" min="0" formControlName='quantity'>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2" *ngIf='unitType'>
-                <div class="form-group">
-                    <label for="dob-input"><strong>Unit Type</strong></label>
-                    <label class='form-control'> {{(unitType.symbol +unitType.description) }}</label>
+                <div class="col-md-2" *ngIf='unitType'>
+                    <div class="form-group">
+                        <label for="dob-input"><strong>Unit Type</strong></label>
+                        <label class='form-control'> {{(unitType.symbol +unitType.description) }}</label>
 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label><strong>Product Name</strong></label>
+                        <select class="custom-select" formControlName="productId">
+                                            <option [value]="product.productId"  *ngFor="let product of products; let i=index">{{product.name}}
+                                            </option>
+                                 </select>
+                    </div>
+                </div>
+                <div class="col-md-1" *ngIf='product'>
+                    <div class="form-group">
+                        <label for="dob-input"><strong>Price</strong> </label>
+                        <label class='form-control'> {{ product.sellPrice}}</label>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf='product && quantity'>
+                    <div class="form-group">
+                        <label for="dob-input"><strong>Amount</strong></label>
+                        <input type='number' readonly="readonly" class='form-control' placeholder="Amount" formControlName='amount'>
+                    </div>
+                </div>
+                <div class="col-md-1 align-self-end" *ngIf='product'>
+                    <div class="form-group ">
+                        <a class='btn btn-success' (click)='addProductToNote()'>Add</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label><strong>Product Name</strong></label>
-                    <select class="custom-select" formControlName="productId">
-                                <option [value]="product.productId"  *ngFor="let product of products; let i=index">{{product.name}}
-                                </option>
-                     </select>
-                </div>
-            </div>
-            <div class="col-md-1" *ngIf='product'>
-                <div class="form-group">
-                    <label for="dob-input"><strong>Price</strong> </label>
-                    <label class='form-control'> {{ product.sellPrice}}</label>
-                </div>
-            </div>
-            <div class="col-md-2" *ngIf='product && quantity'>
-                <div class="form-group">
-                    <label for="dob-input"><strong>Amount</strong></label>
-                    <input type='number' readonly="readonly" class='form-control' placeholder="Amount" formControlName='amount'>
-                </div>
-            </div>
-            <div class="col-md-1 align-self-end" *ngIf='product'>
-                <div class="form-group ">
-                    <a class='btn btn-success' (click)='addProductToNote()'>Add</a>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col-md-1">#</th>
-                <th scope="col-md-1">Quantity</th>
-                <th scope="col-md-2">UnitType</th>
-                <th scope="col-md-4">Product Name</th>
-                <th scope="col-md-2">Price</th>
-                <th scope="col-md-2">Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor='let productDetail of productDetailList ;let i=index'>
-                <th scope="row">{{i+1}}</th>
-                <td>{{productDetail.quantity}}</td>
-                <td>{{getProductUnitType(productDetail.productId).description}}</td>
-                <td>{{getProduct(productDetail.productId).name}}</td>
-                <td>{{getProduct(productDetail.productId).sellPrice}}</td>
-                <td>{{productDetail.amount | currency}}</td>
-                <!-- <td><a class="btn btn-danger"><i class="fas fa-minus-circle"></i></a> -->
-                <td>
-                    <div (click)="removeProductFromNote(i)" class='btn btn-danger btn-lg  add-button '><i class="fas fa-minus-circle"></i> </div>
-                </td>
-            </tr>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col-md-1">#</th>
+                    <th scope="col-md-1">Quantity</th>
+                    <th scope="col-md-2">UnitType</th>
+                    <th scope="col-md-4">Product Name</th>
+                    <th scope="col-md-2">Price</th>
+                    <th scope="col-md-2">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let productDetail of productDetailList ;let i=index'>
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{productDetail.quantity}}</td>
+                    <td>{{getProductUnitType(productDetail.productId).description}}</td>
+                    <td>{{getProduct(productDetail.productId).name}}</td>
+                    <td>{{getProduct(productDetail.productId).sellPrice}}</td>
+                    <td>{{productDetail.amount | currency}}</td>
+                    <!-- <td><a class="btn btn-danger"><i class="fas fa-minus-circle"></i></a> -->
+                    <td>
+                        <div (click)="removeProductFromNote(i)" class='btn btn-danger btn-lg  add-button '><i class="fas fa-minus-circle"></i> </div>
+                    </td>
+                </tr>
 
-            <tr class="bg-success">
-                <th scope="col-md-1"></th>
-                <th scope="col-md-1"></th>
-                <th scope="col-md-2"></th>
-                <th scope="col-md-4"> </th>
-                <th scope="col-md-2">Total</th>
-                <th scope="col-md-1" [@incrementFontSize]='state'>{{getTotal() | currency}}</th>
-            </tr>
-        </tbody>
-    </table>
+                <tr class="bg-success">
+                    <th scope="col-md-1"></th>
+                    <th scope="col-md-1"></th>
+                    <th scope="col-md-2"></th>
+                    <th scope="col-md-4"> </th>
+                    <th scope="col-md-2">Total</th>
+                    <th scope="col-md-1" [@incrementFontSize]='state'>{{getTotal() | currency}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -1,0 +1,47 @@
+<div class='container'>
+    <div class="row">
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary" (click)="onNew()">New</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class='reglist'>
+
+            <div class="col-sm-12 ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col-1">#</th>
+                            <th scope="col-1">Type</th>
+                            <th scope="col-1">Date</th>
+                            <th scope="col-1">Received By</th>
+                            <th scope="col-1">Delivered To</th>
+                            <th scope="col-3">Observation </th>
+                            <th scope="col-2 ">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [class]='note.noteType=="entry" ? "alert-primary" : "alert-danger"' *ngFor="let note of notes; let i=index">
+                            <th scope="row">{{note.noteId}}</th>
+                            <td>{{note.noteType}}</td>
+                            <td>{{note.date | date}}</td>
+                            <td>{{note.receivedBy }}</td>
+                            <td>{{note.deliveredTo }}</td>
+                            <td>{{note.observation }}</td>
+                            <td>{{note.total | currency}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info" (click)="onSee(note)">See..</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" (click)="onDelete(i)">Delete</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>

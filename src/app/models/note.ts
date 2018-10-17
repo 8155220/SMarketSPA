@@ -1,3 +1,4 @@
+import { ProductNoteDetail } from './product-note-detail';
 export interface Note {
   noteId: number;
   receivedBy: string;
@@ -7,4 +8,5 @@ export interface Note {
   observation: string;
   noteType: string;
   total: number;
+  productNoteDetails:ProductNoteDetail[];
 }

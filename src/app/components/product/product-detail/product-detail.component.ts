@@ -33,4 +33,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  getQrString(){
+    return "Name : "+this.product.name +"\n Provider:"+this.product.provider +"\n Price:"+this.product.sellPrice +"\n Stock :"+this.product.quantity;
+  }
 }

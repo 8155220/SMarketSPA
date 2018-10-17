@@ -90,9 +90,17 @@
                     </h3>
                 </li>
                 <li class="list-group-item">
+                    <h3> Quantity :
+                        <small class="text-muted"> {{product.quantity }}</small>
+                    </h3>
+                </li>
+                <li class="list-group-item">
                     <h3> Expiration Date :
                         <small class="text-muted"> {{product.expirationDate | date }}</small>
                     </h3>
+                </li>
+                <li class="card-img-bottom">
+                    <ngx-qrcode qrc-element-type="url" [qrc-value]="getQrString()"></ngx-qrcode>
                 </li>
             </ul>
         </div>

@@ -56,6 +56,9 @@ export class SMarketService {
   getLastProducts() {
     return this.getQuery("Products/last");
   }
+  getNotes() {
+    return this.getQuery("Notes");
+  }
 
   createUnitType(unitType: any) {
     let postUrl: string = `${this.url}UnitTypes/`;
@@ -351,20 +354,10 @@ export class SMarketService {
   createContactUs(contactUs: any) {
     let postUrl: string = `${this.url}ContactUs/`;
     let header = new HttpHeaders().set("Content-Type", "application/json");
-
     return this.http.post(postUrl, contactUs, { headers: header });
   }
 
   createNote(note: Note, productNoteDetail: ProductNoteDetail[]) {
-
-    console.log('nota');
-    
-    console.log(note);
-    console.log('Productdetail');
-
-    console.log(productNoteDetail);
-    
-    
     let dtoNote: DTONote = new DTONote();
     note.total = productNoteDetail.reduce( (acu,cur)=>acu+cur.amount,0);
     dtoNote.note = note;
@@ -374,5 +367,14 @@ export class SMarketService {
     let header = new HttpHeaders().set("Content-Type", "application/json");
 
     return this.http.post(postUrl, dtoNote, { headers: header });
+  }
+
+  deleteNote(id: number) {
+    let deleteUrl: string = `${this.url}Notes/${id}`;
+    return this.http.delete(deleteUrl);
+  }
+  getNote(id:number){
+      let getUrl:string = `${this.url}Notes/${id}`;
+      return this.http.get(getUrl);
   }
 }

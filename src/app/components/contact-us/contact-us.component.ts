@@ -24,10 +24,6 @@ export class ContactUsComponent implements OnInit {
 
   onSave(){
     this.submitted = true;
-
-    console.log(this.name);
-    console.log(this.email);
-    console.log(this.subject);
     
     // stop here if form is invalid
     if (this.myForm.invalid) {

@@ -18,22 +18,9 @@
             <p>Ingvar Kamprad founded IKEA in 1943 as a mostly mail-order sales business. It began to sell furniture five years later. The first Möbel-IKÉA store was opened in Älmhult, Småland, in 1958 (Möbel means "furniture" in Swedish). </p>
             <p>The first stores outside Sweden were opened in Norway (1963) and Denmark (1969).</p>
         </div>
-        <div class="col-sm-4">
-            <app-carousel [lastProducts]='lastProducts'></app-carousel>
-            <!-- <h2 class="mt-4">Contact Us</h2>
-            <address>
-          <strong>Start Bootstrap</strong>
-          <br>3481 Melrose Place
-          <br>Beverly Hills, CA 90210
-          <br>
-        </address>
-            <address>
-          <abbr title="Phone">P:</abbr>
-          (123) 456-7890
-          <br>
-          <abbr title="Email">E:</abbr>
-          <a href="mailto:#">name@example.com</a>
-        </address> -->
+        <div class="col-sm-4" *ngIf='lastProducts'>
+            <!-- <app-carousel [lastProducts]='lastProducts'></app-carousel> -->
+            <app-carousel></app-carousel>
         </div>
     </div>
     <!-- /.row -->

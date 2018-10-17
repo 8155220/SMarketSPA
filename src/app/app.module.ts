@@ -13,7 +13,7 @@ import { ProductTypeComponent } from './components/product-type/product-type.com
 import { FormsModule }   from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CreateProductComponent } from './components/product/create-product/create-product.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
@@ -26,6 +26,9 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { NoteAddComponent } from './components/note/note-add/note-add.component';
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NoteIndexComponent } from './components/note/note-index/note-index.component';
+import { NoteInformationComponent } from './components/note/note-information/note-information.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +46,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CarouselComponent,
     ContactUsComponent,
     NoteAddComponent,
-    NoteDetailComponent
+    NoteDetailComponent,
+    NoteIndexComponent,
+    NoteInformationComponent
     
   ],
   imports: [
@@ -56,6 +61,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
+    NgxQRCodeModule,
   ],
   providers: [SMarketService],
   bootstrap: [AppComponent]

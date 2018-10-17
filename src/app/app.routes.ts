@@ -1,3 +1,4 @@
+import { NoteIndexComponent } from './components/note/note-index/note-index.component';
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
 import { NoteAddComponent } from './components/note/note-add/note-add.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
@@ -10,10 +11,13 @@ import { CreateProductComponent } from './components/product/create-product/crea
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { SelectImageComponent } from './components/shared/select-image/select-image.component';
+import { NoteInformationComponent } from './components/note/note-information/note-information.component';
 const APP_ROUTES: Routes = [
 
-    {path: 'note/detail',component: NoteDetailComponent},
-    {path: 'note/add',component: NoteAddComponent},
+    {path: 'notes/detail',component: NoteInformationComponent},
+    {path: 'notes',component: NoteIndexComponent},
+   // {path: 'notes/detail',component: NoteDetailComponent},
+    {path: 'notes/add',component: NoteAddComponent},
     {path: 'contact-us',component: ContactUsComponent},
     {path: 'home',component: HomeComponent},
     {path: 'products',component: ProductComponent},

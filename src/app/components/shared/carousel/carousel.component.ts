@@ -1,6 +1,7 @@
+import { SMarketService } from './../../../services/smarket.service';
 import { Product } from './../../../models/product';
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgbCarouselConfig,NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-carousel',
@@ -8,17 +9,30 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent implements OnInit {
-  @Input()
+ // @Input()
   lastProducts:Product[]=[];
-
-  constructor(config: NgbCarouselConfig) {
+  @ViewChild('myCarousel') myCarousel:NgbCarousel;
+  constructor(public config: NgbCarouselConfig,public sMarketservice:SMarketService) {
     // customize default values of carousels used by this component tree
-    config.interval = 3000;
-    config.wrap = true;
-    config.keyboard = false;
-    config.pauseOnHover = false;
+    
   }
   ngOnInit() {
+    this.getLastProduct();
+    this.config.interval = 2000;
+    this.config.wrap = true;
+    this.config.keyboard = false;
+    this.config.pauseOnHover = false;
+    // if(this.lastProducts && this.myCarousel)
+    // this.myCarousel.next;
+    console.log(this.myCarousel);
+    
+  }
+
+  getLastProduct() {
+    this.sMarketservice.getLastProducts().subscribe((e: any[]) => {
+      this.lastProducts = e;
+
+    });
   }
 
 }

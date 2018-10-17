@@ -9,6 +9,7 @@ export interface Product {
   description: string;
   image: string;
   created:Date;
+  quantity:number;
   unitTypeId: number;
   productTypeId: number;
   images:ImageModel[];

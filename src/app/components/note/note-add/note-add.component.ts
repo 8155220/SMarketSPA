@@ -1,8 +1,9 @@
+import { Router } from '@angular/router';
 import { Note } from './../../../models/note';
 import { Product } from './../../../models/product';
 import { ProductNoteDetail } from './../../../models/product-note-detail';
 import { SMarketService } from './../../../services/smarket.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
@@ -14,18 +15,19 @@ import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 export class NoteAddComponent implements OnInit {
 
   // noteType:string='';
+  loading:boolean=false;
   myForm:FormGroup;
   productDetailList:ProductNoteDetail[]=[];
-  constructor(public sMarketService:SMarketService ,public fb:FormBuilder) { 
+  constructor(public sMarketService:SMarketService ,public fb:FormBuilder,public router:Router) { 
   }
 
   ngOnInit() {
     this.myForm = this.fb.group({
-      noteType:"entry",
-      receivedBy:"",
-      deliveredTo:"",
-      observation:"",
-      date:""
+      noteType:["entry"],
+      receivedBy:["",[Validators.required]],
+      deliveredTo:["",[Validators.required]],
+      observation:["",[Validators.required]],
+      date:["",[Validators.required]]
     });
 
     this.myForm.valueChanges.subscribe(console.log);
@@ -83,9 +85,13 @@ export class NoteAddComponent implements OnInit {
   onSave(){
     let note:Note = this.myForm.value as Note;
     note.date= this.getDate();
-    
+    this.loading=true;
     this.sMarketService.createNote(note,this.productDetailList).subscribe(
-      e=>console.log()
+      e=>{
+        console.log();
+        this.loading=false;
+        this.router.navigate(['/home']);
+      }
     );
   }
 
