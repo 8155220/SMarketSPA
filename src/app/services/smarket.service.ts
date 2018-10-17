@@ -13,6 +13,9 @@ import {
   tap
 } from "rxjs/operators";
 import { Observable, forkJoin, from, combineLatest } from "rxjs";
+import { Note } from "../models/note";
+import { ProductNoteDetail } from "../models/product-note-detail";
+import { DTONote } from "../models/dto/dtonote";
 @Injectable({
   providedIn: "root"
 })
@@ -311,18 +314,20 @@ export class SMarketService {
           if (counter == files.length - 1) {
             product.images = this.images;
             product.image = this.images[posPrincipalImage].url;
-            
-            console.log('Entro peticiones');
-            
-            this.http.post(postUrl, product, {
-              //cambiar por headers
-              headers: new HttpHeaders({
-                "Content-Type": "application/json"
-              })
-            }).subscribe( success=> console.log(success),error=>console.log(error)
-            
-            );
 
+            console.log("Entro peticiones");
+
+            this.http
+              .post(postUrl, product, {
+                //cambiar por headers
+                headers: new HttpHeaders({
+                  "Content-Type": "application/json"
+                })
+              })
+              .subscribe(
+                success => console.log(success),
+                error => console.log(error)
+              );
           }
           counter++;
         });
@@ -343,12 +348,31 @@ export class SMarketService {
     return this.allPercentage;
   }
 
-
   createContactUs(contactUs: any) {
     let postUrl: string = `${this.url}ContactUs/`;
     let header = new HttpHeaders().set("Content-Type", "application/json");
 
-    return this.http
-      .post(postUrl, contactUs, {headers:header});
+    return this.http.post(postUrl, contactUs, { headers: header });
+  }
+
+  createNote(note: Note, productNoteDetail: ProductNoteDetail[]) {
+
+    console.log('nota');
+    
+    console.log(note);
+    console.log('Productdetail');
+
+    console.log(productNoteDetail);
+    
+    
+    let dtoNote: DTONote = new DTONote();
+    note.total = productNoteDetail.reduce( (acu,cur)=>acu+cur.amount,0);
+    dtoNote.note = note;
+    dtoNote.productNoteDetail = productNoteDetail;
+
+    let postUrl: string = `${this.url}Notes/`;
+    let header = new HttpHeaders().set("Content-Type", "application/json");
+
+    return this.http.post(postUrl, dtoNote, { headers: header });
   }
 }

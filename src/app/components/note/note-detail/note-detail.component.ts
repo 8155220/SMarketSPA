@@ -2,16 +2,34 @@ import { ProductNoteDetail } from './../../../models/product-note-detail';
 import { Product } from './../../../models/product';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { UnitType } from './../../../models/unit-type';
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SMarketService } from '../../../services/smarket.service';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 
 @Component({
   selector: "app-note-detail",
   templateUrl: "./note-detail.component.html",
-  styleUrls: ["./note-detail.component.css"]
+  styleUrls: ["./note-detail.component.css"],
+  animations: [
+    trigger('incrementFontSize',[
+      state('small', style({
+        'font-size':'15px',
+    })),
+    state('large', style({
+      'font-size':'15px',
+    })),
+    transition('small <=> large', animate('200ms ease-in', keyframes([
+      style({opacity: 0, 'font-size':'15px', offset: 0}),
+      style({opacity: 1, 'font-size':'22px', offset: 0.5}),
+      style({opacity: 1, 'font-size':'15px',    offset: 1.0})
+    ]))),
+     // transition('show=>hide',animate('600ms ease-out'))
+    ])
+  ]
 })
 export class NoteDetailComponent implements OnInit {
+  state:string='small';
   unitTypes:UnitType[]=[];
   products:Product[]=[];
   product:Product;
@@ -19,6 +37,10 @@ export class NoteDetailComponent implements OnInit {
   unitType: UnitType;
 
   productDetailList:ProductNoteDetail[]=[];
+  @Output()
+   productDetailAdded:EventEmitter<ProductNoteDetail> = new EventEmitter();
+  @Output()
+   productDetailDeleted:EventEmitter<number> = new EventEmitter();
   
   constructor(public sMarketService:SMarketService,public fb:FormBuilder) {
     sMarketService.getUnitTypes().subscribe((data: UnitType[]) => {
@@ -53,7 +75,6 @@ export class NoteDetailComponent implements OnInit {
   changeProductQuantity(){
    this.myForm.get('quantity').valueChanges.subscribe(e=>{
      console.log('entroquantity');
-     
        if(this.product){
          let amount:number = this.product.sellPrice*e;
          this.myForm.get('amount').setValue(amount);
@@ -61,9 +82,6 @@ export class NoteDetailComponent implements OnInit {
    });
   }
 
-  /*get sellPrice(){
-    return this.myForm.get('amount').value();
-  }*/
   get quantity(){
     return this.myForm.get('quantity').value;
   }
@@ -72,13 +90,34 @@ export class NoteDetailComponent implements OnInit {
   }
 
   addProductToNote(){
+    this.state=(this.state === 'small' ? 'large' : 'small');
+    if(this.productAlreadyAdded()){
+
+      this.productDetailList
+      .map(e=>{
+        if(e.productId===this.product.productId){
+          e.quantity= e.quantity +this.quantity;
+          console.log('cantida Acu : '+e.quantity);
+          
+          e.amount=e.amount + this.amount;
+          this.productDetailAdded.emit(e);
+         // return e;
+        }
+      })
+      ;
+    }
+    else {
     let productNoteDetail = new ProductNoteDetail();
     productNoteDetail.productId=this.product.productId;
     productNoteDetail.quantity= this.quantity;
     productNoteDetail.amount=this.amount;
-    console.log(productNoteDetail);
-    
     this.productDetailList.push(productNoteDetail);
+    this.productDetailAdded.emit(productNoteDetail);
+
+    }
+
+
+//productAlreadyAdded
   }
 
   getProductUnitType(productId:number){
@@ -91,5 +130,14 @@ export class NoteDetailComponent implements OnInit {
 
   getTotal(){
     return this.productDetailList.reduce((acc,cur)=> acc+cur.amount,0);
+  }
+
+  removeProductFromNote(i:number){
+      this.productDetailList.splice(i,1);
+      this.productDetailDeleted.emit(i);
+  }
+
+  productAlreadyAdded(){
+    return this.productDetailList.find(e=>e.productId===this.product.productId);
   }
 }

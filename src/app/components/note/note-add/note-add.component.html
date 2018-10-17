@@ -10,9 +10,9 @@
 
             <form [formGroup]='myForm' (ngSubmit)='onSave()'>
                 <div class="form-group">
-                    <label>Tipo Nota</label>
+                    <label>Note Type</label>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="entrada" name="noteType" value='entry' class="custom-control-input" checked ormControlName='noteType'>
+                        <input type="radio" id="entrada" name="noteType" value='entry' class="custom-control-input" checked formControlName='noteType'>
                         <label class="custom-control-label" for="entrada">Entry Stocks</label>
                     </div>
                     <div class="custom-control custom-radio">
@@ -30,7 +30,7 @@
                     <input type='text' class='form-control' placeholder="" formControlName='deliveredTo'>
                 </div>
                 <div class="form-group">
-                    <label>Delivered To</label>
+                    <label>Observation</label>
                     <input type='text' class='form-control' placeholder="" formControlName='observation'>
                 </div>
 
@@ -43,12 +43,17 @@
                           </button>
                     </div>
                 </div>
-
-
             </form>
         </div>
         <div class="col-md-3"></div>
 
 
+    </div>
+    <app-note-detail (productDetailAdded)='onAddProductDetail($event)' (productDetailDeleted)='onDeleteProductDetail($event)'></app-note-detail>
+
+    <div class="row justify-content-end ">
+        <div class="col-1  ">
+            <a class="btn btn-primary form-control" (click)="onSave()"> Save</a>
+        </div>
     </div>
 </div>

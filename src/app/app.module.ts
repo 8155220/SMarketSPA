@@ -25,6 +25,7 @@ import { CarouselComponent } from './components/shared/carousel/carousel.compone
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { NoteAddComponent } from './components/note/note-add/note-add.component';
 import { NoteDetailComponent } from './components/note/note-detail/note-detail.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { NoteDetailComponent } from './components/note/note-detail/note-detail.c
     
   ],
   imports: [
+    BrowserAnimationsModule ,
     BrowserModule,
     FormsModule,
     HttpClientModule,

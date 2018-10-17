@@ -1,3 +1,6 @@
+import { Note } from './../../../models/note';
+import { Product } from './../../../models/product';
+import { ProductNoteDetail } from './../../../models/product-note-detail';
 import { SMarketService } from './../../../services/smarket.service';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
@@ -12,8 +15,8 @@ export class NoteAddComponent implements OnInit {
 
   // noteType:string='';
   myForm:FormGroup;
+  productDetailList:ProductNoteDetail[]=[];
   constructor(public sMarketService:SMarketService ,public fb:FormBuilder) { 
-
   }
 
   ngOnInit() {
@@ -29,20 +32,65 @@ export class NoteAddComponent implements OnInit {
     this.onChangeNoteType();
   }
 
-  onSave(){
-
-  }
+ 
 
   get noteType(){
     return this.myForm.get('noteType').value;
   }
 
+  set date(date:string){
+    this.myForm.get('date').setValue(date);
+  }
   onChangeNoteType():void{
     this.myForm.get('noteType').valueChanges.subscribe(e=>{
       if(e="entry"){
-
       }
     });
+  }
+
+  onDeleteProductDetail($event){
+    this.productDetailList.splice($event,1);
+  }
+  onAddProductDetail($event:ProductNoteDetail){
+    if(this.productAlreadyAdded($event)){
+      this.productDetailList
+      .map(e=>{
+        if(e.productId===$event.productId){
+          e.quantity= $event.quantity;
+          e.amount=$event.amount;
+          return e;
+        }
+      })
+      ;
+    }else {
+      this.productDetailList.push($event);
+    }
+    console.log(this.productDetailList);
+    
+  }
+
+  getDate(){
+    let expirationDate = this.myForm.get("date").value;
+    expirationDate =
+      expirationDate.year +
+      "-" +
+      expirationDate.month +
+      "-" +
+      expirationDate.day;
+      return expirationDate;
+  }
+
+  onSave(){
+    let note:Note = this.myForm.value as Note;
+    note.date= this.getDate();
+    
+    this.sMarketService.createNote(note,this.productDetailList).subscribe(
+      e=>console.log()
+    );
+  }
+
+  productAlreadyAdded(product:ProductNoteDetail){
+    return this.productDetailList.find(e=>e.productId===product.productId);
   }
 
 }
