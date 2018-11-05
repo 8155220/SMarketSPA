@@ -1,24 +1,33 @@
 import { Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { SMarketService } from "../../services/smarket.service";
 import { Product } from "../../models/product";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: "app-product",
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.css"]
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit,OnDestroy {
   products: Product[] = [];
   constructor(public sMarketService: SMarketService, public route: Router) {
-    sMarketService.getProducts().subscribe((data: any) => {
+    
+  }
+
+  ngOnInit() {
+    console.log('OnINItPRoduct list');
+    
+    this.sMarketService.getProducts().pipe(first()).subscribe((data: any) => {
       console.log(data);
       this.products = data;
       console.log(this.products);
-    });
+    },undefined,()=>console.log("Complete")
+    );
   }
-
-  ngOnInit() {}
+  ngOnDestroy(): void {
+    console.log('OnDestroy list');
+  }
 
   onDelete(index: number) {
     let product: Product = this.products[index];

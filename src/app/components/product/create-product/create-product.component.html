@@ -1,8 +1,17 @@
 <!-- <h1 class="animated fadeIn">{{heroe.nombre | uppercase }}<small> ({{heroe.aparicion | date:'y'}})</small></h1>
 <hr> -->
 
+<!-- <div class="progress row" *ngIf="allPercentage>0"> -->
+<div class='container2' *ngIf="loading">
 
-<div class="container div-body">
+    <div class="loader">
+        <!-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="allPercentage " aria-valuemin="0" aria-valuemax="100" style="width: 75%">{{allPercentage }}%</div> -->
+        Loading...
+    </div>
+</div>
+
+
+<div class="container div-body" *ngIf='!loading'>
 
     <app-select-image (fileAdded)="onAddedFile($event)" (fileDeleted)="onDeletedFile($event)" (selectedImageEmitter)="selectedImage($event)"></app-select-image>
 
@@ -67,10 +76,4 @@
 
     </div>
     <!-- <div class="row" *ngIf='allPercentage>0'> -->
-
-    <div class="progress row" *ngIf="allPercentage>0">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="allPercentage " aria-valuemin="0" aria-valuemax="100" style="width: 75%">{{allPercentage }}%</div>
-    </div>
-
-
 </div>

@@ -18,9 +18,10 @@ import { Observable } from "rxjs";
   styleUrls: ["./create-product.component.css"]
 })
 export class CreateProductComponent implements OnInit {
-  allPercentage:number=0;
-  files:any[]=[];
-  selectedImagePos:number;
+  allPercentage: number = 0;
+  files: any[] = [];
+  selectedImagePos: number;
+  loading=false;
 
   eventTarget: any[] = [];
   imagesPreview: string[] = [];
@@ -32,11 +33,9 @@ export class CreateProductComponent implements OnInit {
 
   urls = new Array<string>();
 
-
   // uploadPercent: Observable<number>;
   // downloadURL: Observable<string>;
   images: any[] = [];
-
 
   constructor(
     public sMarketService: SMarketService,
@@ -53,7 +52,6 @@ export class CreateProductComponent implements OnInit {
       this.unitTypes = data;
       console.log(this.unitTypes);
     });
-
   }
 
   ngOnInit() {
@@ -72,25 +70,25 @@ export class CreateProductComponent implements OnInit {
   }
 
   onSave() {
-
     this.myForm.get("expirationDate").setValue(this.getExpirationDate());
     //let producto = this.myForm.value as Product;
-
-    this.sMarketService.createProduct(
-      this.myForm.value,
-      this.files,this.selectedImagePos
-    ).subscribe(e=>{
-      this.allPercentage=e;
-      if(e==100)
-    this.router.navigate(["products"]);
-    });
+    this.loading=true;
+    this.sMarketService
+      .createProduct(this.myForm.value, this.files, this.selectedImagePos)
+      .subscribe(e => {
+        this.allPercentage = e;
+        if (e == 100) {
+          this.loading=false;
+          this.router.navigate(["products"]);
+        }
+      });
   }
 
   onCancel() {
     this.router.navigate(["products"]);
   }
 
-  getExpirationDate(){
+  getExpirationDate() {
     let expirationDate = this.myForm.get("expirationDate").value;
     expirationDate =
       expirationDate.year +
@@ -98,20 +96,19 @@ export class CreateProductComponent implements OnInit {
       expirationDate.month +
       "-" +
       expirationDate.day;
-      return expirationDate;
+    return expirationDate;
   }
 
-  onAddedFile($event){
-    console.log('Llego onAddedFile:'+$event);
+  onAddedFile($event) {
+    console.log("Llego onAddedFile:" + $event);
     this.files.push($event);
   }
-  onDeletedFile($event){
-    console.log('Llego onDeletedFile:'+$event);
-    if($event) this.files.pop();
+  onDeletedFile($event) {
+    console.log("Llego onDeletedFile:" + $event);
+    if ($event) this.files.pop();
   }
-  selectedImage($event){
-    console.log('Llego SelectedImagePost:'+$event);
-    this.selectedImagePos=$event;
+  selectedImage($event) {
+    console.log("Llego SelectedImagePost:" + $event);
+    this.selectedImagePos = $event;
   }
-
 }
