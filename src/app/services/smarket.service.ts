@@ -20,7 +20,7 @@ import { DTONote } from "../models/dto/dtonote";
   providedIn: "root"
 })
 export class SMarketService {
-  private url = "http://localhost:5000/api/";
+  private url = "http://localhost:3500/api/";
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
 
