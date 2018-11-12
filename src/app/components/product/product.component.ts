@@ -9,24 +9,28 @@ import { first } from "rxjs/operators";
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.css"]
 })
-export class ProductComponent implements OnInit,OnDestroy {
+export class ProductComponent implements OnInit, OnDestroy {
   products: Product[] = [];
-  constructor(public sMarketService: SMarketService, public route: Router) {
-    
-  }
+  constructor(public sMarketService: SMarketService, public route: Router) {}
 
   ngOnInit() {
-    console.log('OnINItPRoduct list');
-    
-    this.sMarketService.getProducts().pipe(first()).subscribe((data: any) => {
-      console.log(data);
-      this.products = data;
-      console.log(this.products);
-    },undefined,()=>console.log("Complete")
-    );
+    console.log("OnINItPRoduct list");
+
+    this.sMarketService
+      .getProducts()
+      .pipe(first())
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.products = data;
+          console.log(this.products);
+        },
+        undefined,
+        () => console.log("Complete")
+      );
   }
   ngOnDestroy(): void {
-    console.log('OnDestroy list');
+    console.log("OnDestroy list");
   }
 
   onDelete(index: number) {
