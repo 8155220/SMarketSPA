@@ -11,32 +11,44 @@ import { first } from "rxjs/operators";
 })
 export class ProductComponent implements OnInit, OnDestroy {
   products: Product[] = [];
-  constructor(public sMarketService: SMarketService, public route: Router) {}
+  loading=true;
+  deleteSelected:number;
+  constructor(public sMarketService: SMarketService, public route: Router) {
+    
+  }
 
   ngOnInit() {
-    console.log("OnINItPRoduct list");
-
-    this.sMarketService
-      .getProducts()
-      .pipe(first())
-      .subscribe(
-        (data: any) => {
-          console.log(data);
-          this.products = data;
-          console.log(this.products);
-        },
-        undefined,
-        () => console.log("Complete")
-      );
+    console.log('OnINItPRoduct list');
+    
+    this.sMarketService.getProducts().pipe(first()).subscribe((data: any) => {
+      console.log(data);
+      this.products = data;
+      console.log(this.products);
+      this.loading=false;
+    },undefined,()=>console.log("Complete")
+    );
   }
   ngOnDestroy(): void {
     console.log("OnDestroy list");
   }
 
   onDelete(index: number) {
-    let product: Product = this.products[index];
-
-    this.sMarketService.deleteProduct(product.productId);
+    console.log("Clikeo :"+index);
+    this.deleteSelected=index;
+    /*let product: Product = this.products[index];
+    this.loading=true;
+    this.sMarketService.deleteProduct(product.productId).subscribe(e=>{
+      this.loading=false;
+      this.ngOnInit();
+    });*/
+  }
+  onDeleteConfirm(){
+    let product: Product = this.products[this.deleteSelected];
+    this.loading=true;
+    this.sMarketService.deleteProduct(product.productId).subscribe(e=>{
+      this.loading=false;
+      this.ngOnInit();
+    });
   }
 
   onDetails(index: number) {
