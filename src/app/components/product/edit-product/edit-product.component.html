@@ -1,4 +1,12 @@
-<div class="container">
+<div class='container2' *ngIf="loading">
+
+    <div class="loader">
+        <!-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="allPercentage " aria-valuemin="0" aria-valuemax="100" style="width: 75%">{{allPercentage }}%</div> -->
+        Loading...
+    </div>
+</div>
+
+<div class="container" *ngIf="!loading">
 
     <div class="row ">
 
@@ -67,7 +75,6 @@
 
         <form [formGroup]="myForm" (ngSubmit)="onSave()">
 
-            value:{{myForm.value | json}}
             <hr>
             <div class="form-group">
                 <label for="Name">Name</label>

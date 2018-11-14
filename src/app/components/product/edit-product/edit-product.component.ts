@@ -22,6 +22,7 @@ export class EditProductComponent implements OnInit {
   public dob: NgbDateStruct;
   product: Product;
   urls = new Array<string>();
+  loading=true;
 
   // uploadPercent: Observable<number>;
   // downloadURL: Observable<string>;
@@ -71,6 +72,7 @@ export class EditProductComponent implements OnInit {
       let id = params["productId"];
       this.sMarketService.getProduct(id).subscribe((data: Product) => {
         this.product = data;
+        this.loading=false;
         for (let i = this.product.images.length; i < 4; i++) {
           let image: ImageModel = new ImageModel();
           image.url = "assets/img/noimage.png";
@@ -92,12 +94,16 @@ export class EditProductComponent implements OnInit {
     this.myForm.get('provider').setValue(this.product.provider);
     this.myForm.get('sellPrice').setValue(this.product.sellPrice);
     this.myForm.get('buyPrice').setValue(this.product.buyPrice);
-    this.myForm.get('expirationDate').setValue(this.product.expirationDate);
+    this.setDate(this.product.expirationDate);
     this.myForm.get('image').setValue(this.product.image);
     this.myForm.get('description').setValue(this.product.description);
     this.myForm.get('productTypeId').setValue(this.product.productTypeId);
     this.myForm.get('unitTypeId').setValue(this.product.unitTypeId);
     this.myForm.get('productTypeId').setValue(this.product.productTypeId);
+  }
+  setDate(date:any){
+    let d = new Date(date)
+    this.myForm.get('expirationDate').setValue({year:d.getFullYear(),month:d.getMonth(),day:d.getDate()});
   }
 
   public addFile1(event: any) {
@@ -166,12 +172,15 @@ export class EditProductComponent implements OnInit {
     this.myForm.get("expirationDate").setValue(expirationDate);
     let producto = this.myForm.value as Product;
 
+    this.loading=true;
     let aux = this.sMarketService.updateProduct(
       this.myForm.value,
       this.eventTarget,
-      this.posSelecionadoFinal()
-    );
-    this.router.navigate(["products"]);
+      this.posSelecionadoFinal()).subscribe(e=>{
+        this.loading=false;
+        this.router.navigate(["products"]);
+      });
+    
   }
 
   onCancel() {

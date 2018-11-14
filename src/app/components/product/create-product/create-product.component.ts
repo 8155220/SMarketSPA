@@ -73,15 +73,23 @@ export class CreateProductComponent implements OnInit {
     this.myForm.get("expirationDate").setValue(this.getExpirationDate());
     //let producto = this.myForm.value as Product;
     this.loading=true;
-    this.sMarketService
+
+     this.sMarketService
       .createProduct(this.myForm.value, this.files, this.selectedImagePos)
       .subscribe(e => {
-        this.allPercentage = e;
+        /* this.allPercentage = e;
         if (e == 100) {
           this.loading=false;
+          this.router.navigate(["products"]); */
+          
+
+       },undefined,()=>{
+        console.log('Complete');
+        //console.log(e);
+          this.loading=false;
           this.router.navigate(["products"]);
-        }
-      });
+        
+      });  
   }
 
   onCancel() {
@@ -90,6 +98,9 @@ export class CreateProductComponent implements OnInit {
 
   getExpirationDate() {
     let expirationDate = this.myForm.get("expirationDate").value;
+    console.log('Fecha Antes');
+    console.log(expirationDate);
+    
     expirationDate =
       expirationDate.year +
       "-" +

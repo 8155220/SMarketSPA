@@ -10,7 +10,9 @@ import {
   catchError,
   finalize,
   switchMap,
-  tap
+  tap,
+  concatMap,
+  concat
 } from "rxjs/operators";
 import { Observable, forkJoin, from, combineLatest } from "rxjs";
 import { Note } from "../models/note";
@@ -196,7 +198,7 @@ export class SMarketService {
         .subscribe((product2: any) => {});
     }
   }*/
-  async updateProduct(
+  /*async updateProduct(
     product: any,
     eventTarget: any,
     posPrincipalImage: number
@@ -219,11 +221,6 @@ export class SMarketService {
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(urlfile => {
-              // console.log("downloadUrl :"+urlfile);
-              // console.log('Contador :'+counter);
-              // console.log('Images :'+this.images);
-
-              // let image = { url: urlfile };
               let image = new ImageModel();
               image.url = urlfile;
               if (counter == posPrincipalImage) {
@@ -267,6 +264,22 @@ export class SMarketService {
         })
         .subscribe((product2: any) => {});
     }
+  }*/
+
+  updateProduct(
+    product: any,
+    eventTarget: any,
+    posPrincipalImage: number
+  ) {
+    console.log(product);
+
+    let postUrl: string = `${this.url}Products/${product.productId}`;
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+      return this.http
+        .put(postUrl, product, {
+          headers: new HttpHeaders({ "Content-Type": "application/json" })
+        });
+    
   }
 
   createImage(image: any) {
@@ -287,14 +300,48 @@ export class SMarketService {
     return this.getQuery("Product/" + id);
   }
 
+  /* createProduct(
+    product: any,
+    files: any,
+    posPrincipalImage: number
+  ){
+    let postUrl: string = `${this.url}Products/`;
+    const allPercentage: Observable<number>[] = [];
+    let counter = 0;
+    
+ 
+    return from(files).pipe(switchMap((e:any)=> {
+      const path = `productImages/+${new Date().getTime()}_${product.name}_${e.lastModified}`;
+      const ref = this.storage.ref(path);
+      return this.storage.upload(path, e).then(f=>{
+        return f.ref.getDownloadURL().then(urlfile => {
+          let image = new ImageModel();
+          image.url = urlfile;
+          if (counter == posPrincipalImage) {
+            image.isMain = true;
+          }
+          this.images.push(image);
+          if (counter == files.length - 1) {
+            product.images = this.images;
+            product.image = this.images[posPrincipalImage].url;
+          }
+          console.log(counter);
+          
+          counter++;
+        });
+      });
+    })
+    )
+      
+      );
+  } */
+
   createProduct(
     product: any,
     files: any,
     posPrincipalImage: number
   ): Observable<number> {
     let postUrl: string = `${this.url}Products/`;
-    let headers = new HttpHeaders().set("Content-Type", "application/json");
-
     const allPercentage: Observable<number>[] = [];
     let counter = 0;
     for (const file of files) {
